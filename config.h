@@ -167,7 +167,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_q,		killclient,	{0} },
 	{ MODKEY|ShiftMask,		XK_q,		spawn,		{.v = (const char*[]){ "sysact", NULL } } },
 	{ MODKEY,			XK_w,		spawn,		{.v = (const char*[]){ BROWSER, NULL } } },
-	{ MODKEY|ShiftMask,		XK_w,		spawn,		{.v = (const char*[]){ "sysact", NULL } } },
+	{ MODKEY|ShiftMask,		XK_w,		spawn,		{.v = (const char*[]){ "screenpen", NULL } } },
 	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook") },
 	{ MODKEY|ShiftMask,		XK_e,		spawn,		{.v = (const char*[]){ "slock", NULL } }   },
 	{ MODKEY,			XK_r,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
@@ -191,7 +191,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_backslash,		view,		{0} },
 	/* { MODKEY|ShiftMask,		XK_backslash,		spawn,		SHCMD("") }, */
 
-	{ MODKEY,			XK_a,   spawn,  {.v = (const char*[]){ "thunar", NULL } }		},
+	{ MODKEY,			XK_a,   spawn,  {.v = (const char*[]){ "pcmanfm", NULL } }		},
 	{ MODKEY|ShiftMask,		XK_a,   spawn, 	{.v = (const char*[]){ "bgrndrf", NULL } } },
 	{ MODKEY,			XK_s,		togglesticky,	{0} },
 	/* { MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("") }, */
