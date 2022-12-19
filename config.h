@@ -216,8 +216,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_z,	defaultgaps,	{0}  },
 	{ MODKEY,			XK_x,		incrgaps,	{.i = -3 } },
 	{ MODKEY|ShiftMask,		XK_x,	togglegaps,	{0}  },
-	{ MODKEY,			XK_c,		spawn,		{.v = (const char*[]){ "saveclpb", NULL } } },
-	{ MODKEY|ShiftMask,		XK_c,		spawn,		{.v = (const char*[]){ "dmenuclpb", NULL } } },
+	{ MODKEY,			XK_c,		spawn,		{.v = (const char*[]){ "dmenuclpb", NULL } } },
+	{ MODKEY|ShiftMask,		XK_c,		spawn,		{.v = (const char*[]){ "saveclpb", NULL } } },
 	/* V is automatically bound above in STACKKEYS */
 	{ MODKEY,			XK_b,		togglebar,	{0} },
 	/* { MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("") }, */
