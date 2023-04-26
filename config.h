@@ -19,11 +19,11 @@ static int topbar             = 1;        /* 0 means bottom bar */
 //static char *fonts[]          = { "Noto Sans Regular:size=9", "NotoColorEmoji:pixelsize=9:antialias=true:autohint=true"  };
 static char *fonts[]          = { "monospace:size=8", "NotoColorEmoji:pixelsize=8:antialias=true:autohint=true"  };
 static char normbgcolor[]           = "#000000";
-static char normbordercolor[]       = "#1d2021";
+static char normbordercolor[]       = "#212121";
 static char normfgcolor[]           = "#fbf1c7";
 static char selfgcolor[]            = "#fbf1c7";
 static char selbordercolor[]        = "#000000";
-static char selbgcolor[]            = "#1d2021";
+static char selbgcolor[]            = "#212121";
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
@@ -182,7 +182,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_i,		setlayout,	{.v = &layouts[7]} }, /* centeredfloatingmaster */
 	{ MODKEY,			XK_o,		incnmaster,     {.i = +1 } },
 	{ MODKEY|ShiftMask,		XK_o,		incnmaster,     {.i = -1 } },
-	{ MODKEY,			XK_p,			spawn,		{.v = (const char*[]){ "mpc", "toggle", NULL } } },
+	{ MODKEY,			XK_p,			spawn,		SHCMD("mpc toggle; pauseallmpv") },
 	{ MODKEY|ShiftMask,		XK_p,			spawn,		SHCMD("mpc pause; pauseallmpv") },
 	{ MODKEY,			XK_bracketleft,		spawn,		{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },
 	{ MODKEY|ShiftMask,		XK_bracketleft,		spawn,		{.v = (const char*[]){ "mpc", "seek", "-60", NULL } } },
@@ -225,7 +225,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat ; pkill -RTMIN+6 dwmblocks") },
 	{ MODKEY,			XK_m,		spawn,		{.v = (const char*[]){ "dmenumusic", NULL } } },
 	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
-	{ MODKEY,			XK_comma,	spawn,		{.v = (const char*[]){ "mpc", "prev", NULL } } },
+	{ MODKEY,			XK_comma,	spawn,		{.v = (const char*[]){ "dmenucode", NULL } } },
     { MODKEY|ShiftMask,		XK_comma,	spawn,		{.v = (const char*[]){ "mpc", "seek", "0%", NULL } } },
 	{ MODKEY,			XK_period,	spawn,		{.v = (const char*[]){ "mpc", "next", NULL } } },
 	{ MODKEY|ShiftMask,		XK_period,	spawn,		{.v = (const char*[]){ "mpc", "repeat", NULL } } },
