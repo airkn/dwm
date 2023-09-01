@@ -6,10 +6,10 @@
 #define BROWSER "firefox"
 
 /* appearance */
-static unsigned int borderpx  = 3;        /* border pixel of windows */
+static unsigned int borderpx  = 2;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
-static unsigned int gappih    = 20;       /* horiz inner gap between windows */
-static unsigned int gappiv    = 10;       /* vert inner gap between windows */
+static unsigned int gappih    = 5;       /* horiz inner gap between windows */
+static unsigned int gappiv    = 5;       /* vert inner gap between windows */
 static unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
 static unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
 static int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
@@ -52,6 +52,7 @@ static const Rule rules[] = {
 	*/
 	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
 	{ "firefox",     NULL,       NULL,       	    1 << 2,       0,           0,         0,        -1 },
+	{ "Caprine",     NULL,       NULL,       	    1 << 4,       0,           0,         0,        -1 },
 	{ "obsidian",     NULL,       NULL,       	    1,            0,           0,         0,        -1 },
 	{ "Spotify",     NULL,       NULL,       	    1 << 4,       0,           0,         0,        -1 },
 	{ "Gimp",        NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
@@ -182,7 +183,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_i,		setlayout,	{.v = &layouts[7]} }, /* centeredfloatingmaster */
 	{ MODKEY,			XK_o,		incnmaster,     {.i = +1 } },
 	{ MODKEY|ShiftMask,		XK_o,		incnmaster,     {.i = -1 } },
-	{ MODKEY,			XK_p,			spawn,		SHCMD("mpc toggle; pauseallmpv") },
+	{ MODKEY,			XK_p,			spawn,		{.v = (const char*[]){ "dmenudict", NULL } } },
 	{ MODKEY|ShiftMask,		XK_p,			spawn,		SHCMD("mpc pause; pauseallmpv") },
 	{ MODKEY,			XK_bracketleft,		spawn,		{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },
 	{ MODKEY|ShiftMask,		XK_bracketleft,		spawn,		{.v = (const char*[]){ "mpc", "seek", "-60", NULL } } },
