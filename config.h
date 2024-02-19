@@ -2,16 +2,17 @@
 
 /* Constants */
 #define TERMINAL "st"
+#define SPTERMINAL "stb"
 #define TERMCLASS "St"
 #define BROWSER "firefox"
 
 /* appearance */
 static unsigned int borderpx  = 2;        /* border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
-static unsigned int gappih    = 5;       /* horiz inner gap between windows */
-static unsigned int gappiv    = 5;       /* vert inner gap between windows */
-static unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static unsigned int gappih    = 0;       /* was 5| horiz inner gap between windows */
+static unsigned int gappiv    = 0;       /* was 5| vert inner gap between windows */
+static unsigned int gappoh    = 0;       /* was 10| horiz outer gap between windows and screen edge */
+static unsigned int gappov    = 0;       /* was 10| vert outer gap between windows and screen edge */
 static int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
@@ -20,10 +21,10 @@ static int topbar             = 1;        /* 0 means bottom bar */
 static char *fonts[]          = { "monospace:size=8", "NotoColorEmoji:pixelsize=8:antialias=true:autohint=true"  };
 static char normbgcolor[]           = "#000000";
 static char normbordercolor[]       = "#212121";
-static char normfgcolor[]           = "#fbf1c7";
-static char selfgcolor[]            = "#fbf1c7";
-static char selbordercolor[]        = "#000000";
-static char selbgcolor[]            = "#212121";
+static char normfgcolor[]           = "#ffffff";
+static char selfgcolor[]           = "#ffffff";
+static char selbordercolor[]           = "#000000";
+static char selbgcolor[]           = "#212121";
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
@@ -34,8 +35,8 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
+const char *spcmd1[] = {SPTERMINAL, "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd2[] = {SPTERMINAL, "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
@@ -52,11 +53,10 @@ static const Rule rules[] = {
 	*/
 	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
 	{ "firefox",     NULL,       NULL,       	    1 << 2,       0,           0,         0,        -1 },
-	{ "Caprine",     NULL,       NULL,       	    1 << 4,       0,           0,         0,        -1 },
-	{ "obsidian",     NULL,       NULL,       	    1,            0,           0,         0,        -1 },
-	{ "Spotify",     NULL,       NULL,       	    1 << 4,       0,           0,         0,        -1 },
 	{ "Gimp",        NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
-	{ "discord",      NULL,       NULL,       	    1 << 3,       0,           0,         0,        -1 },
+	{ "discord",     NULL,       NULL,       	    1 << 4,       0,           0,         0,        -1 },
+	{ "thunderbird",        NULL,       NULL,       	    1 << 5,       0,           0,         0,        -1 },
+	{ "libreoffice",   NULL,       NULL,       	    1 << 3,       0,           0,         0,        -1 },
 	{ TERMCLASS,        NULL,       NULL,       	    0,            0,           1,         0,        -1 },
 	{ NULL,             NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
 	{ TERMCLASS,      "bg",        NULL,       	    1 << 7,       0,           1,         0,        -1 },
@@ -65,7 +65,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static float mfact     = 0.50; /* factor of master area size [0.05..0.95] */
 static int nmaster     = 1;    /* number of clients in master area */
 static int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
@@ -166,11 +166,13 @@ static Key keys[] = {
 	{ MODKEY,			XK_Tab,		view,		{0} },
 	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_q,		killclient,	{0} },
-	{ MODKEY|ShiftMask,		XK_q,		spawn,		{.v = (const char*[]){ "sysact", NULL } } },
+	//{ MODKEY|ShiftMask,		XK_q,		spawn,		{.v = (const char*[]){ "sysact", NULL } } },
+    { MODKEY|ShiftMask,           XK_q,    quit,             {.i = 23} },
 	{ MODKEY,			XK_w,		spawn,		{.v = (const char*[]){ BROWSER, NULL } } },
 	{ MODKEY|ShiftMask,		XK_w,		spawn,		{.v = (const char*[]){ "screenpen", NULL } } },
-	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook") },
-	{ MODKEY|ShiftMask,		XK_e,		spawn,		{.v = (const char*[]){ "slock", NULL } }   },
+	/* { MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook") }, */
+	{ MODKEY,			XK_e,		spawn,		{.v = (const char*[]){ "thunderbird", NULL } } },
+	{ MODKEY|ShiftMask,		XK_e,		spawn,		{.v = (const char*[]){ "slock", NULL } } },
 	{ MODKEY,			XK_r,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
 	{ MODKEY|ShiftMask,		XK_r,		spawn,		{.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
 	{ MODKEY,			XK_t,		setlayout,	{.v = &layouts[0]} }, /* tile */
@@ -184,7 +186,8 @@ static Key keys[] = {
 	{ MODKEY,			XK_o,		incnmaster,     {.i = +1 } },
 	{ MODKEY|ShiftMask,		XK_o,		incnmaster,     {.i = -1 } },
 	{ MODKEY,			XK_p,			spawn,		{.v = (const char*[]){ "dmenudict", NULL } } },
-	{ MODKEY|ShiftMask,		XK_p,			spawn,		SHCMD("mpc pause; pauseallmpv") },
+	{ MODKEY|ShiftMask,		XK_p,			spawn,	{.v = (const char*[]){ "dmenudictsel", NULL } } },
+	/* { MODKEY|ShiftMask,		XK_p,			spawn,		SHCMD("mpc pause; pauseallmpv") }, */
 	{ MODKEY,			XK_bracketleft,		spawn,		{.v = (const char*[]){ "mpc", "seek", "-10", NULL } } },
 	{ MODKEY|ShiftMask,		XK_bracketleft,		spawn,		{.v = (const char*[]){ "mpc", "seek", "-60", NULL } } },
 	{ MODKEY,			XK_bracketright,	spawn,		{.v = (const char*[]){ "mpc", "seek", "+10", NULL } } },
@@ -217,14 +220,14 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_z,	defaultgaps,	{0}  },
 	{ MODKEY,			XK_x,		incrgaps,	{.i = -3 } },
 	{ MODKEY|ShiftMask,		XK_x,	togglegaps,	{0}  },
-	{ MODKEY,			XK_c,		spawn,		{.v = (const char*[]){ "dmenuclpb", NULL } } },
-	{ MODKEY|ShiftMask,		XK_c,		spawn,		{.v = (const char*[]){ "saveclpb", NULL } } },
+	{ MODKEY,			XK_c,		spawn,		{.v = (const char*[]){ "clipmenu", NULL } } },
+	{ MODKEY|ShiftMask,		XK_c,		spawn,		{.v = (const char*[]){ "", NULL } } },
 	/* V is automatically bound above in STACKKEYS */
 	{ MODKEY,			XK_b,		togglebar,	{0} },
 	/* { MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_n,		spawn,		{.v = NULL } },
 	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat ; pkill -RTMIN+6 dwmblocks") },
-	{ MODKEY,			XK_m,		spawn,		{.v = (const char*[]){ "dmenumusic", NULL } } },
+	{ MODKEY,			XK_m,		spawn,		{.v = (const char*[]){ "dmenuapps", NULL } } },
 	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ MODKEY,			XK_comma,	spawn,		{.v = (const char*[]){ "dmenucode", NULL } } },
     { MODKEY|ShiftMask,		XK_comma,	spawn,		{.v = (const char*[]){ "mpc", "seek", "0%", NULL } } },
